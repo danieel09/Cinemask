@@ -1,13 +1,7 @@
-const express = require("express");
-const mongoose = require("mongoose");
-
-const router = express.Router();
-
-router.get('/populares', async (req, res) => {
+exports.obtenerPopulares = async (req, res) => {
   try {
     const { page = 1, language = 'es-ES' } = req.query;
     
-    // Construimos la URL con los parámetros necesarios
     const url = `${process.env.TMDB_BASE_URL}/tv/popular?api_key=${process.env.TMDB_API_KEY}&language=${language}&page=${page}`;
 
     const response = await fetch(url);
@@ -33,10 +27,9 @@ router.get('/populares', async (req, res) => {
       error: error.message
     });
   }
-});
+};
 
-// Endpoint para buscar películas usando FETCH nativo
-router.get('/buscar', async (req, res) => {
+exports.buscarSerie = async (req, res) => {
   try {
     const { query, page = 1, language = 'es-ES' } = req.query;
 
@@ -64,6 +57,4 @@ router.get('/buscar', async (req, res) => {
       error: error.message
     });
   }
-});
-
-module.exports = router;
+};
