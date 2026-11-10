@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
-        //window.location.href = '/index.html';
+        //window.location.href = '/signup.html';
 
       } catch (error) {
         console.error('Error:', error);
