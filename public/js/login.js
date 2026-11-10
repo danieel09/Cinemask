@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const formSignin = document.querySelector('.signin-form');
   const btnGuest = document.getElementById('btnGuest');
-  const btnSignup = document.getElementById('btnSignup');
 
   if (formSignin) {
     formSignin.addEventListener('submit', async (e) => {
@@ -26,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
-        //window.location.href = '/password.html';
+        //window.location.href = '/inicio.html';
 
       } catch (error) {
         console.error('Error:', error);
@@ -40,13 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       localStorage.setItem('usuario', JSON.stringify({ role: 'guest', nombre: 'Invitado' }));
       //window.location.href = '/inicio.html';
-    });
-  }
-
-  if(btnSignup) {
-    btnSignup.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.location.href = '/signup.html';
     });
   }
 });

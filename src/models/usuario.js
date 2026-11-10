@@ -13,7 +13,7 @@ const usuariosSchema = new mongoose.Schema(
     edad: {
       type: Number,
       required: [true, "La edad es obligatoria"],
-      min: [0, "La edad no puede ser negativa"],
+      min: [18, "La edad no puede ser menor a 18"],
       default: 0
     },
 

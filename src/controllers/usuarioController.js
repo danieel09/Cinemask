@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs');
 
 exports.registro = async (req, res) => {
   try {
-    const { nombre, edad, pais, correo, password, username } = req.body;
+    const { nombre, edad, pais, correo, password, username, rol } = req.body;
 
-    if (!nombre || !edad || !pais || !correo || !password || !username) {
+    if (!nombre || !edad || !pais || !correo || !password || !username || !rol) {
       return res.status(400).json({ mensaje: 'Todos los campos son obligatorios' });
     }
 
@@ -29,7 +29,7 @@ exports.registro = async (req, res) => {
       correo: correo.toLowerCase(),
       password: passwordHash,
       username: username,
-      rol: 'administrador' //-> Mandarlo desde pantalla de registro 
+      rol: rol
     });
 
     await nuevoUsuario.save();
@@ -43,7 +43,8 @@ exports.registro = async (req, res) => {
         pais: nuevoUsuario.pais,
         correo: nuevoUsuario.correo,
         rol: nuevoUsuario.rol,
-        username: nuevoUsuario.username
+        username: nuevoUsuario.username,
+        rol: nuevoUsuario.rol
       }
     });
 
