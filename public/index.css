@@ -92,7 +92,7 @@ body {
 
 .password-help {
   margin: -4px 0 17px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.25;
   text-align: center;
 }
@@ -121,6 +121,7 @@ body {
   cursor: pointer;
   font-family: "Space Mono", "Courier New", monospace;
   font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .submit-button:hover {
@@ -128,27 +129,45 @@ body {
 }
 
 .submit-button:focus-visible,
-.signup-link:focus-visible {
+.signup-link:focus-visible,
+.guest-link:focus-visible {
   outline: 3px solid #0003ff;
   outline-offset: 3px;
 }
 
-.signup-link {
+.bottom-actions {
   display: flex;
-  width: 113px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 5px;
+}
+
+.actions-divider {
+  width: 2px;
+  height: 35px;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.signup-link,
+.guest-link {
+  display: flex;
+  width: 120px;
   min-height: 44px;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
   border: 1px solid #000;
   border-radius: 10px;
   color: #000;
   font-family: "Space Mono", "Courier New", monospace;
-  font-size: 15px;
+  font-size: 14px;
   text-decoration: none;
+  margin: 0;
 }
 
-.signup-link:hover {
+.signup-link:hover, 
+.guest-link:hover {
   background: rgb(0 0 0 / 8%);
 }
 
@@ -171,14 +190,14 @@ body {
   .password-help {
     margin-top: 4px;
     margin-bottom: 22px;
-    font-size: 18px;
+    font-size: 15px;
   }
 
   .submit-button {
     min-height: 79px;
   }
 
-  .signup-link {
+  .bottom-actions {
     margin-top: 10px;
   }
 }

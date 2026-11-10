@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const conectarDB = async () => {
   try {
-    // Asegúrate de que process.env.MONGO_URI no sea undefined
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`MongoDB Atlas Conectado: ${conn.connection.host}`);
   } catch (error) {
