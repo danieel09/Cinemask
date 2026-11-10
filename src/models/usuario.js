@@ -40,6 +40,13 @@ const usuariosSchema = new mongoose.Schema(
         type: String,
         enum: ['usuario', 'administrador'],
         default: 'usuario'
+    },
+
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
     }
   },
   {

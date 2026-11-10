@@ -16,7 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 const rutasPelis = require("./src/routes/PeliculaRoute");
 const rutasSeries = require("./src/routes/SerieRoute");
 const rutasAuth = require("./src/routes/authRoute");
+const rutasUsuarios = require("./src/routes/usuarioRoute");
 
+app.use("/api/usuarios", rutasUsuarios);
 app.use("/api/peliculas", rutasPelis);
 app.use("/api/series", rutasSeries);
 app.use('/api/auth', rutasAuth);

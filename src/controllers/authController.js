@@ -1,4 +1,5 @@
 const Usuario = require('../models/usuario');
+const bcrypt = require('bcryptjs');
 
 exports.login = async (req, res) => {
   try {
@@ -18,10 +19,9 @@ exports.login = async (req, res) => {
       });
     }
 
-    if (usuario.password !== password) {
-      return res.status(401).json({ 
-        mensaje: 'Contraseña incorrecta' 
-      });
+    const esCorrecto = await bcrypt.compare(password, usuario.password);
+    if (!esCorrecto) {
+      return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }
 
     res.status(200).json({
@@ -32,7 +32,8 @@ exports.login = async (req, res) => {
         edad: usuario.edad,
         pais: usuario.pais,
         correo: usuario.correo,
-        rol: usuario.rol
+        rol: usuario.rol,
+        username: usuario.username
       }
     });
 
