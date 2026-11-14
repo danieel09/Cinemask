@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CINEMASK | Inicio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="navbar.css" />
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+
+  <div id="navbar-container"></div>
+
+  <main class="main-container">
+
+    <section class="carousel-section" id="search-results-section">
+      <div class="section-header">
+        <h2 class="section-title">Resultados de búsqueda <span class="pill" id="searchCount">0</span></h2>
+      </div>
+      <div class="carousel-track" id="track-search"></div>
+    </section>
+
+    <section class="carousel-section" id="sec-peliculas">
+      <div class="section-header">
+        <h2 class="section-title">Películas Populares</h2>
+      </div>
+      <div class="carousel-track" id="track-movies-popular"></div>
+    </section>
+
+    <section class="carousel-section">
+      <div class="section-header">
+        <h2 class="section-title">Películas en Tendencia</h2>
+      </div>
+      <div class="carousel-track" id="track-movies-trending"></div>
+    </section>
+
+    <section class="carousel-section" id="sec-series">
+      <div class="section-header">
+        <h2 class="section-title">Series Populares</h2>
+      </div>
+      <div class="carousel-track" id="track-tv-popular"></div>
+    </section>
+
+    <section class="carousel-section">
+      <div class="section-header">
+        <h2 class="section-title">Series en Tendencia</h2>
+      <div class="carousel-track" id="track-tv-trending"></div>
+    </section>
+
+    <section class="carousel-section" id="sec-top">
+      <div class="section-header">
+        <h2 class="section-title">Aclamadas por la Crítica</h2>
+      <div class="carousel-track" id="track-top-rated"></div>
+    </section>
+
+    <section class="carousel-section">
+      <div class="section-header">
+        <h2 class="section-title">Estrenos</h2>
+      <div class="carousel-track" id="track-now-playing"></div>
+    </section>
+
+  </main>
+
+  <script src="js/navbar.js"></script>
+  <script src="js/busqueda.js"></script>
+  <script src="js/carrusel.js"></script>
+  
+</body>
+</html>

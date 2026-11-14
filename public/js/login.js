@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         localStorage.setItem('token', data.token);
 
-        window.location.href = '/index.html';
+        window.location.href = '/home.html';
 
       } catch (error) {
         console.error('Error:', error);
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnGuest.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.setItem('usuario', JSON.stringify({ role: 'guest', nombre: 'Invitado' }));
-      window.location.href = '/index.html';
+      window.location.href = '/home.html';
     });
   }
 });
