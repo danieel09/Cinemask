@@ -47,8 +47,19 @@ const usuariosSchema = new mongoose.Schema(
         required: true,
         unique: true,
         trim: true
+    },
+
+  //Para olvidar contraseña
+  codigoVerificacion: {
+        type: String,
+        default: null
+    },
+    expiracionCodigo: {
+        type: Date,
+        default: null
     }
   },
+
   {
     timestamps: true
   }

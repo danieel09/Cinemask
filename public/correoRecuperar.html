@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Ingresa el código y una nueva contraseña para recuperar tu cuenta de CINEMASK.">
+  <title>Recuperación | CINEMASK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="correoRecuperar.css">
+</head>
+<body>
+  <main class="recovery-screen">
+    <section class="recovery-card" aria-labelledby="recovery-title">
+      <h1 class="recovery-title" id="recovery-title">Recuperación</h1>
+
+      <form class="recovery-form" action="#" method="post">
+        <div class="form-field">
+          <label for="codigo">Código</label>
+          <input
+            id="codigo"
+            name="codigo"
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            required
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="nueva-contrasena">Nueva Contraseña</label>
+          <input
+            id="nueva-contrasena"
+            name="nuevaContrasena"
+            type="password"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <button class="submit-button" type="submit">Enviar</button>
+      </form>
+
+      <a class="signin-link" href="index.html" id="signin-link">Sign in</a>
+    </section>
+  </main>
+  <script src="./js/correoRecuperar.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Recupera el acceso a tu cuenta de CINEMASK.">
+  <title>Recuperación | CINEMASK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="correo.css">
+</head>
+<body>
+  <main class="recovery-screen">
+    <section class="recovery-card" aria-labelledby="recovery-title">
+      <h1 class="recovery-title" id="recovery-title">Recuperación</h1>
+
+      <form class="recovery-form" action="#" method="post">
+        <div class="form-field">
+          <label for="correo">Correo</label>
+          <input
+            id="correo"
+            name="correo"
+            type="email"
+            autocomplete="email"
+            required
+            aria-label="Correo electrónico"
+          >
+        </div>
+
+        <button class="submit-button" type="submit">Enviar Código</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="./js/correo.js"></script>
+
+</body>
+</html>

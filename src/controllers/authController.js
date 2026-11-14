@@ -1,5 +1,6 @@
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
   try {
@@ -24,8 +25,15 @@ exports.login = async (req, res) => {
       return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
     }
 
+    const token = jwt.sign(
+      { id: usuario._id, correo: usuario.correo, rol: usuario.rol },
+      process.env.JWT_SECRET,
+      { expiresIn: '6h' }
+    );
+
     res.status(200).json({
       mensaje: 'Inicio de sesión exitoso',
+      token: token, 
       usuario: {
         id: usuario._id,
         nombre: usuario.nombre,

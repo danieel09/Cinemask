@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         localStorage.setItem('usuario', JSON.stringify(data.usuario));
+        
+        localStorage.setItem('token', data.token);
 
-        //window.location.href = '/inicio.html';
+        window.location.href = '/index.html';
 
       } catch (error) {
         console.error('Error:', error);
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnGuest.addEventListener('click', (e) => {
       e.preventDefault();
       localStorage.setItem('usuario', JSON.stringify({ role: 'guest', nombre: 'Invitado' }));
-      //window.location.href = '/inicio.html';
+      window.location.href = '/index.html';
     });
   }
 });
