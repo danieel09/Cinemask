@@ -1,0 +1,55 @@
+.invitado-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 24px 16px;
+}
+
+.invitado-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 420px);
+  padding: 40px 32px;
+  border-radius: 15px;
+  background: #d9d9d9;
+  color: #000;
+  text-align: center;
+  font-family: "Courier Prime", "Courier New", monospace;
+}
+
+.invitado-titulo {
+  margin: 0 0 14px;
+  font-family: "Space Mono", "Courier New", monospace;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.invitado-mensaje {
+  margin: 0 0 26px;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.invitado-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 240px);
+  min-height: 54px;
+  padding: 0 20px;
+  border-radius: 15px;
+  background: #000;
+  color: #fff;
+  font-family: "Space Mono", "Courier New", monospace;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.invitado-boton:hover {
+  background: #1e1e1e;
+}

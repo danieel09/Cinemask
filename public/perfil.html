@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Crea tu cuenta en CINEMASK.">
+  <title>Mi Perfil | CINEMASK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="perfil.css">
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="invitado.css" />
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+  <main class="profile-screen">
+    <section class="profile-card" aria-labelledby="profile-title">
+      <h1 class="profile-title" id="profile-title">MI PERFIL</h1>
+
+        <div class="user-pill-profile" id="userBadge">
+          <span>@usuario</span>
+        </div>
+
+      <form class="profile-form" action="#" method="post">
+        <div class="form-field">
+          <label for="username">Nombre de Usuario</label>
+          <input id="username" name="username" type="text" autocomplete="username" required placeholder="nombredeusuario25" disabled>
+        </div>
+
+        <div class="form-field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="given-name" required placeholder="Nombre completo">
+        </div>
+
+        <div class="form-field">
+          <label for="edad">Edad</label>
+          <input class="short-input" id="edad" name="edad" type="number" min="18" inputmode="numeric" required placeholder="18">
+        </div>
+
+        <div class="form-field">
+          <label for="pais">País</label>
+          <span class="select-wrap short-input">
+            <select id="pais" name="pais" autocomplete="country-name" required>
+              <option value="" disabled selected>Selecciona tu país</option>
+              <option value="Argentina">Argentina</option>
+              <option value="Chile">Chile</option>
+              <option value="Colombia">Colombia</option>
+              <option value="España">España</option>
+              <option value="México">México</option>
+              <option value="Perú">Perú</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="form-field">
+          <label for="correo">Correo</label>
+          <input id="correo" name="correo" type="email" autocomplete="email" required placeholder="usuario23@ejemplo.com" disabled>
+        </div>
+
+        <button class="submit-button" type="submit">Guardar Cambios</button>
+      </form>
+    </section>
+  </main>
+</body>
+<script src="/js/profile.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/invitado.js"></script>
+</html>
