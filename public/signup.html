@@ -5,16 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="Crea tu cuenta en CINEMASK.">
-  <title>Sign up | CINEMASK</title>
+  <title id="titleSignup">Sign up | CINEMASK</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Space+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="signup.css">
+  <link rel="stylesheet" href="navbar.css" />
 </head>
 <body>
+  <div id="navbar-container" style="display: none;"></div>
   <main class="signup-screen">
     <section class="signup-card" aria-labelledby="signup-title">
-      <h1 class="signup-title" id="signup-title">SIGN UP</h1>
+      <h1 id="h1Signup" class="signup-title" id="signup-title">SIGN UP</h1>
 
       <form class="signup-form" action="#" method="post">
         <div class="form-field">
@@ -66,7 +68,7 @@
           </select>
         </div>
 
-        <button class="submit-button" type="submit">SIGN UP</button>
+        <button id="btnsignup" class="submit-button" type="submit">SIGN UP</button>
       </form>
 
       <a id="btnsignup-in" class="signin-link" href="index.html">Sign in</a>
@@ -74,4 +76,5 @@
   </main>
 </body>
 <script src="/js/registro.js"></script>
+<script src="js/navbar.js"></script>
 </html>

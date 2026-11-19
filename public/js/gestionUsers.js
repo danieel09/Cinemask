@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const cuerpoTabla = document.getElementById('users-table-body');
+  const registroBtn = document.getElementById('add-user-button');
   const token = localStorage.getItem('token');
 
   try {
@@ -36,6 +37,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error("Error cargando usuarios:", error);
     cuerpoTabla.innerHTML = `<tr><td colspan="5" style="text-align: center;">Error al cargar los datos</td></tr>`;
+  }
+
+  if (registroBtn) {
+    registroBtn.addEventListener('click', () => {
+      window.location.href = '/signup.html';
+    });
   }
 });
 

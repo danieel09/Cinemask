@@ -60,3 +60,25 @@ th {
   background: #111;
   color: #fff;
 }
+
+#add-user-button {
+  display: flex;
+  width: 200px;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin: 32px 0 0;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 15px;
+  background: #2a2a2a;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Space Mono", "Courier New", monospace;
+  font-size: 16px;
+}
+
+#add-user-button:hover {
+  background: #1e1e1e;
+}

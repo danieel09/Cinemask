@@ -1,8 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   const formSignup = document.querySelector('.signup-form');
+  const navbar = document.getElementById('navbar-container');
 
   const contenedorRol = document.getElementById('contenedorRol');
   const btnlogin = document.getElementById('btnsignup-in');
+  const btnsignup = document.getElementById('btnsignup');
+  const h1Signup = document.getElementById('h1Signup');
+  const titleSignup = document.getElementById('titleSignup');
 
   const usuarioSesion = JSON.parse(localStorage.getItem('usuario'));
   const esAdmin = usuarioSesion && usuarioSesion.rol === 'administrador';
@@ -10,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (esAdmin && contenedorRol) {
     contenedorRol.style.display = 'block';
     btnlogin.style.display = 'none';
+    btnsignup.textContent = 'Registrar';
+    h1Signup.textContent = 'Registrar Usuario';
+    titleSignup.textContent = 'Registrar Usuario | CINEMASK';
+    navbar.style.display = 'block';
   }
 
   if (formSignup) {
@@ -38,9 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        localStorage.setItem('usuario', JSON.stringify(data.usuario));
-
-        window.location.href = '/index.html';
+        if (esAdmin) {
+          alert('Usuario registrado correctamente');
+          window.location.href = '/gestionUsers.html';
+        } else {
+          alert('Cuenta creada con éxito. Ahora inicia sesión.');
+          window.location.href = '/index.html';
+        }
 
       } catch (error) {
         console.error('Error:', error);
