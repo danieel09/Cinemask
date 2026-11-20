@@ -25,7 +25,8 @@
       `;
 
       card.addEventListener("click", () => {
-        window.location.href = `detalle.html?id=${item.id}&tipo=${tipo}`;
+        const paginaDetalle = tipo === "movie" ? "pelicula.html" : "detalle.html";
+        window.location.href = `${paginaDetalle}?id=${item.id}&tipo=${tipo}`;
       });
 
       return card;

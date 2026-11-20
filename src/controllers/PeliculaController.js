@@ -108,3 +108,38 @@ exports.obtenerMejorCalificadas = (req, res) => {
 exports.obtenerCartelera = (req, res) => {
   consultarTmdbPeliculas('/movie/now_playing', req, res);
 };
+
+exports.obtenerDetalle = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { language = 'es-ES' } = req.query;
+
+    if (!/^\d+$/.test(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'El identificador de la película no es válido.'
+      });
+    }
+
+    const url = `${process.env.TMDB_BASE_URL}/movie/${id}?api_key=${process.env.TMDB_API_KEY}&language=${encodeURIComponent(language)}&append_to_response=credits`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        success: false,
+        message: 'No se pudo obtener el detalle de la película.',
+        error: data
+      });
+    }
+
+    return res.status(200).json({ success: true, data });
+  } catch (error) {
+    console.error('Error en obtenerDetalle:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al procesar la petición de detalle.',
+      error: error.message
+    });
+  }
+};

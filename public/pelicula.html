@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Película | CINEMASK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="pelicula.css" />
+  <link rel="stylesheet" href="navbar.css" />
+
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <br>
+    <section class="carousel-section" id="search-results-section">
+      <div class="section-header">
+        <h2 class="section-title">Resultados de búsqueda <span class="pill" id="searchCount">0</span></h2>
+      </div>
+      <div class="carousel-track" id="track-search"></div>
+    </section>
+
+    <main class="movie-page" aria-labelledby="movie-title">
+        <div class="page-status" id="page-status" role="status" aria-live="polite">Cargando película…</div>
+
+        <section class="movie-layout" id="movie-layout" hidden>
+        <figure class="movie-poster">
+            <img id="movie-poster" src="" alt="" />
+        </figure>
+
+        <article class="movie-copy">
+            <header class="movie-header">
+            <h1 id="movie-title">Título de la película</h1>
+            <p class="movie-year" id="movie-year">Año de publicación</p>
+            </header>
+
+            <section class="description-section" aria-labelledby="description-title">
+            <h2 id="description-title">Descripción</h2>
+            <p id="movie-overview">La sinopsis de la película aparecerá aquí.</p>
+            </section>
+        </article>
+
+        <aside class="movie-aside" aria-label="Acciones y detalles de la película">
+            <div class="aside-actions">
+            <button
+                class="icon-button"
+                id="watchlist-button"
+                type="button"
+                aria-pressed="false"
+                aria-label="Añadir a watchlist"
+                title="Añadir a watchlist"
+            >
+                <svg viewBox="0 0 64 48" aria-hidden="true" focusable="false">
+                <path d="M4 23.8S15.1 7 31.7 7s27.6 16.8 27.6 16.8S48.3 40.6 31.7 40.6 4 23.8 4 23.8Z" />
+                <circle cx="31.7" cy="23.8" r="11.3" />
+                <circle class="eye-pupil" cx="31.7" cy="23.8" r="4.7" />
+                <circle class="plus-circle" cx="51.5" cy="36" r="9.3" />
+                <path class="plus-mark" d="M51.5 31.8v8.4m-4.2-4.2h8.4" />
+                </svg>
+            </button>
+
+            <button
+                class="icon-button"
+                id="review-button"
+                type="button"
+                aria-expanded="false"
+                aria-controls="review-box"
+                aria-label="Escribir reseña"
+                title="Reseñar película"
+            >
+                <svg viewBox="0 0 54 48" aria-hidden="true" focusable="false">
+                <path d="M8 8h32v27H24l-10 8v-8H8z" />
+                <path d="M15 15h18M15 21h18M15 27h18" />
+                <path d="M44 13h5v27H28" />
+                </svg>
+            </button>
+            </div>
+
+            <div class="aside-header-row">
+            <p class="aside-title">Detalles</p>
+            </div>
+
+            <div class="movie-details-accordion" id="movie-details">
+            <details class="detail-item">
+                <summary class="detail-summary">
+                <span>Director</span>
+                <span class="detail-chevron" aria-hidden="true">›</span>
+                </summary>
+                <div class="detail-content" id="movie-director">—</div>
+            </details>
+
+            <details class="detail-item">
+                <summary class="detail-summary">
+                <span>Cast</span>
+                <span class="detail-chevron" aria-hidden="true">›</span>
+                </summary>
+                <div class="detail-content" id="movie-cast">—</div>
+            </details>
+
+            <details class="detail-item">
+                <summary class="detail-summary">
+                <span>Géneros</span>
+                <span class="detail-chevron" aria-hidden="true">›</span>
+                </summary>
+                <div class="detail-content" id="movie-genres">—</div>
+            </details>
+            </div>
+        </aside>
+        </section>
+    </main>
+    <script src="js/pelicula.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/busqueda.js"></script>
+    <script src="js/carrusel.js"></script>
+</body>
+</html>

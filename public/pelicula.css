@@ -1,0 +1,461 @@
+:root {
+  color-scheme: dark;
+  --page-bg: #050505;
+  --bg-card: #181818;
+  --text-main: #f5f5f5;
+  --text-muted: #c8c8c8;
+  --border-subtle: #444;
+  --panel-bg: #d7d7d7;
+  --panel-surface: #e4e4e4;
+  --panel-border: #b8bec7;
+  --panel-text: #202630;
+  --panel-muted: #4b5360;
+  --accent-action: #111820;
+  --font-display: 'Space Mono', monospace;
+  --font-body: 'Courier Prime', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--page-bg);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: radial-gradient(circle at top right, #141418 0%, var(--page-bg) 55%);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.movie-page {
+  width: min(100% - 36px, 1720px);
+  margin: 0 auto;
+  padding: 32px 0 56px;
+}
+
+.page-status {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 56px 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.page-status.is-error {
+  color: #ffb4b4;
+  border-color: rgba(255, 180, 180, 0.35);
+}
+
+/* Carrusel de resultados de búsqueda (estilo basado en home.css) */
+#search-results-section {
+  display: none;
+  margin-bottom: 36px;
+}
+
+.carousel-section {
+  display: block;
+  width: 100%;
+  clear: both;
+}
+
+.section-header {
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.section-title span.pill {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 8px;
+  border-radius: 99px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.carousel-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 16px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.media-card {
+  flex: 0 0 175px;
+  width: 175px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.media-card:hover {
+  transform: scale(1.04);
+}
+
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: #1f1f1f;
+}
+
+.poster-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-info {
+  padding: 10px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 0 4px;
+}
+
+.card-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Ficha de película */
+.movie-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 30px;
+}
+
+.movie-poster {
+  width: min(100%, 310px);
+  aspect-ratio: 2 / 3;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--panel-bg);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+.movie-poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-copy {
+  min-width: 0;
+}
+
+.movie-header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #555;
+}
+
+.movie-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+
+.movie-year {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.description-section {
+  padding-top: 20px;
+}
+
+.description-section h2 {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.description-section p {
+  margin: 0;
+  color: #ececec;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+/* Panel lateral */
+.movie-aside {
+  min-width: 0;
+  padding: 22px 20px 26px;
+  border-radius: 12px;
+  background: var(--panel-bg);
+  color: var(--panel-text);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+}
+
+.aside-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.icon-button {
+  display: flex;
+  width: 56px;
+  height: 50px;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+  color: #46505e;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+}
+
+.icon-button:hover,
+.icon-button:focus-visible {
+  color: var(--accent-action);
+  background: rgba(1, 255, 35, 0.08);
+  transform: translateY(-1px);
+  outline: 2px solid var(--accent-action);
+  outline-offset: 2px;
+}
+
+.icon-button[aria-pressed="true"],
+.icon-button[aria-expanded="true"] {
+  color: var(--accent-action);
+  background: rgba(17, 24, 32, 0.12);
+}
+
+.icon-button[aria-pressed="true"] .plus-mark {
+  opacity: 0;
+}
+
+.icon-button[aria-pressed="true"] .plus-circle {
+  fill: var(--accent-action);
+}
+
+.icon-button[aria-pressed="true"] .plus-mark {
+  stroke: var(--panel-bg);
+}
+
+.icon-button svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.icon-button svg path,
+.icon-button svg circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-button svg .eye-pupil {
+  fill: currentColor;
+}
+
+.icon-button svg .plus-circle {
+  fill: var(--panel-bg);
+}
+
+.icon-button svg .plus-mark {
+  stroke-width: 2;
+  transition: opacity 0.18s ease;
+}
+
+.aside-title {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.aside-title span {
+  margin-left: 4px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--panel-muted);
+}
+
+/* Acordeón de Director, Cast y Géneros */
+.movie-details-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  border-radius: 8px;
+  background: var(--panel-surface);
+  border: 1px solid var(--panel-border);
+  overflow: hidden;
+}
+
+.detail-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--panel-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.detail-summary::-webkit-details-marker {
+  display: none;
+}
+
+.detail-summary:hover,
+.detail-summary:focus-visible {
+  background: rgba(5, 5, 5, 0.06);
+  outline: none;
+}
+
+.detail-summary:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--panel-text);
+}
+
+.detail-chevron {
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--panel-muted);
+  transition: transform 0.2s ease;
+}
+
+.detail-item[open] .detail-chevron {
+  transform: rotate(90deg);
+  color: var(--panel-text);
+}
+
+.detail-content {
+  padding: 0 12px 12px;
+  font-size: 0.83rem;
+  line-height: 1.45;
+  color: var(--panel-muted);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .media-card {
+    flex: 0 0 140px;
+    width: 140px;
+  }
+}
+
+@media (min-width: 700px) {
+  .movie-page {
+    width: min(90%, 1720px);
+    padding-top: clamp(48px, 7vw, 110px);
+  }
+
+  .movie-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: clamp(30px, 5vw, 92px);
+  }
+
+  .movie-poster {
+    flex: 1.05 1 0;
+    width: auto;
+    max-width: none;
+    margin: 0;
+  }
+
+  .movie-copy {
+    flex: 1.55 1 0;
+    padding-top: 2px;
+  }
+
+  .movie-aside {
+    flex: 0.9 1 0;
+    padding: 26px 24px;
+  }
+
+  .aside-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (min-width: 1200px) {
+  .movie-aside {
+    padding: 32px 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
