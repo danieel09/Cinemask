@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const genresEl = document.getElementById('movie-genres');
 
   const params = new URLSearchParams(window.location.search);
-  const movieId = params.get('id') || params.get('tmdbId');
+  const mediaId = params.get('id') || params.get('tmdbId');
+  const mediaType = (params.get('tipo') || 'movie').toLowerCase();
 
   const TMDB_IMG_W500 = 'https://image.tmdb.org/t/p/w500';
   const FALLBACK_POSTER = 'images/logoCinemask.png';
@@ -38,21 +39,37 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${TMDB_IMG_W500}${cleanPath}`;
   }
 
-  function resolveYear(movie) {
-    if (movie.anioEstreno) return String(movie.anioEstreno);
-    if (movie.year) return String(movie.year);
-    const rawDate = movie.release_date || movie.fechaEstreno || '';
+  function resolveYear(media, tipo) {
+    if (media.anioEstreno) return String(media.anioEstreno);
+    if (media.year) return String(media.year);
+
+    const rawDate = media.release_date || media.first_air_date || media.fechaEstreno || '';
     const match = String(rawDate).match(/\d{4}/);
-    return match ? match[0] : 'Año no disponible';
+    const yearStr = match ? match[0] : 'Año no disponible';
+
+    return tipo === 'tv' && match ? `${yearStr}` : yearStr;
   }
 
-  function formatDuration(movie) {
-    const rawDuration = movie.duracion ?? movie.runtime;
+  function formatDuration(media, tipo) {
+    if (tipo === 'tv') {
+      const partes = [];
+      if (typeof media.number_of_seasons === 'number' && media.number_of_seasons > 0) {
+        partes.push(
+          media.number_of_seasons === 1
+            ? '1 temporada'
+            : `${media.number_of_seasons} temporadas`
+        );
+      }
+      if (Array.isArray(media.episode_run_time) && media.episode_run_time.length > 0) {
+        partes.push(`${media.episode_run_time[0]} min/ep`);
+      }
+      return partes.length > 0 ? partes.join(' • ') : 'No disponible';
+    }
 
+    const rawDuration = media.duracion ?? media.runtime;
     if (typeof rawDuration === 'number' && rawDuration > 0) {
       return `${rawDuration} min`;
     }
-
     if (typeof rawDuration === 'string' && rawDuration.trim()) {
       const trimmed = rawDuration.trim();
       return /^\d+$/.test(trimmed) ? `${trimmed} min` : trimmed;
@@ -82,19 +99,23 @@ document.addEventListener('DOMContentLoaded', () => {
     return fallback;
   }
 
-  function normalizeMoviePayload(raw) {
-    const movie = raw && raw.data ? raw.data : raw?.pelicula || raw || {};
-    const credits = movie.credits || raw?.credits || {};
+  function normalizeMediaPayload(raw, tipo) {
+    const media = raw && raw.data ? raw.data : raw?.pelicula || raw || {};
+    const credits = media.credits || raw?.credits || {};
 
-    let director = movie.director;
-    if (!director && Array.isArray(credits.crew)) {
-      const directors = credits.crew
-        .filter((person) => person && person.job === 'Director' && person.name)
-        .map((person) => person.name);
-      director = directors.length > 0 ? directors : 'No disponible';
+    let director = media.director;
+    if (!director) {
+      if (tipo === 'tv' && Array.isArray(media.created_by) && media.created_by.length > 0) {
+        director = media.created_by.map((person) => person.name).filter(Boolean);
+      } else if (Array.isArray(credits.crew)) {
+        const directors = credits.crew
+          .filter((person) => person && person.job === 'Director' && person.name)
+          .map((person) => person.name);
+        director = directors.length > 0 ? directors : 'No disponible';
+      }
     }
 
-    let cast = movie.cast || movie.reparto;
+    let cast = media.cast || media.reparto;
     if (!cast && Array.isArray(credits.cast)) {
       cast = credits.cast
         .slice(0, 8)
@@ -102,29 +123,34 @@ document.addEventListener('DOMContentLoaded', () => {
         .filter(Boolean);
     }
 
-    const genres = movie.generos || movie.genres;
+    const genres = media.generos || media.genres;
 
     return {
-      id: movie.id || movie._id || movie.tmdbId || movieId,
-      title: movie.title || movie.titulo || 'Sin título',
-      year: resolveYear(movie),
+      id: media.id || media._id || media.tmdbId || mediaId,
+      title: media.title || media.name || media.titulo || 'Sin título',
+      year: resolveYear(media, tipo),
       overview:
-        movie.overview ||
-        movie.sinopsis ||
-        movie.descripcion ||
+        media.overview ||
+        media.sinopsis ||
+        media.descripcion ||
         'Sin descripción disponible.',
       posterUrl: resolvePosterUrl(
-        movie.poster_path || movie.poster || movie.posterUrl
+        media.poster_path || media.poster || media.posterUrl
       ),
-      duration: formatDuration(movie),
+      duration: formatDuration(media, tipo),
       director: formatList(director, 'No disponible'),
       cast: formatList(cast, 'No disponible'),
       genres: formatList(genres, 'No disponible')
     };
   }
 
-  async function fetchMovieData(id) {
-    const response = await fetch(`/api/peliculas/${encodeURIComponent(id)}`);
+  async function fetchMediaData(id, tipo) {
+    const endpoint =
+      tipo === 'tv'
+        ? `/api/series/${encodeURIComponent(id)}`
+        : `/api/peliculas/${encodeURIComponent(id)}`;
+
+    const response = await fetch(endpoint);
     let json;
 
     try {
@@ -135,44 +161,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!response.ok || json.success === false) {
       throw new Error(
-        json.message || 'No se pudo obtener la información de la película desde la API.'
+        json.message ||
+          `No se pudo obtener la información de la ${tipo === 'tv' ? 'serie' : 'película'} desde la API.`
       );
     }
 
     return json;
   }
 
-  function renderMovie(movie) {
-    document.title = `${movie.title} | CINEMASK`;
+  function renderMedia(media) {
+    document.title = `${media.title} | CINEMASK`;
 
     if (posterImg) {
-      posterImg.src = movie.posterUrl;
-      posterImg.alt = `Póster de ${movie.title}`;
+      posterImg.src = media.posterUrl;
+      posterImg.alt = `Póster de ${media.title}`;
       posterImg.onerror = () => {
         posterImg.onerror = null;
         posterImg.src = FALLBACK_POSTER;
       };
     }
 
-    if (titleEl) titleEl.textContent = movie.title;
-    if (yearEl) yearEl.textContent = movie.year;
-    if (overviewEl) overviewEl.textContent = movie.overview;
+    if (titleEl) titleEl.textContent = media.title;
+    if (yearEl) yearEl.textContent = media.year;
+    if (overviewEl) overviewEl.textContent = media.overview;
 
-    if (durationEl) durationEl.textContent = movie.duration;
-    if (directorEl) directorEl.textContent = movie.director;
-    if (castEl) castEl.textContent = movie.cast;
-    if (genresEl) genresEl.textContent = movie.genres;
+    if (durationEl) durationEl.textContent = media.duration;
+    if (directorEl) directorEl.textContent = media.director;
+    if (castEl) castEl.textContent = media.cast;
+    if (genresEl) genresEl.textContent = media.genres;
 
     if (statusEl) statusEl.hidden = true;
     if (layoutEl) layoutEl.hidden = false;
   }
 
-  if (!movieId) {
-    setError('No se especificó ninguna película en la URL (ejemplo: pelicula.html?id=550).');
+  if (!mediaId) {
+    setError('No se especificó ningún título en la URL (ejemplo: pelicula.html?id=550&tipo=movie).');
     return;
   }
 
-  fetchMovieData(movieId)
-    .then((raw) => renderMovie(normalizeMoviePayload(raw)))
+  fetchMediaData(mediaId, mediaType)
+    .then((raw) => renderMedia(normalizeMediaPayload(raw, mediaType)))
     .catch((error) => setError(error.message));
 });
