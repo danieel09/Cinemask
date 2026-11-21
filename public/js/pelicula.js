@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('movie-year');
   const overviewEl = document.getElementById('movie-overview');
 
+  const durationEl = document.getElementById('movie-duration');
   const directorEl = document.getElementById('movie-director');
   const castEl = document.getElementById('movie-cast');
   const genresEl = document.getElementById('movie-genres');
@@ -43,6 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const rawDate = movie.release_date || movie.fechaEstreno || '';
     const match = String(rawDate).match(/\d{4}/);
     return match ? match[0] : 'Año no disponible';
+  }
+
+  function formatDuration(movie) {
+    const rawDuration = movie.duracion ?? movie.runtime;
+
+    if (typeof rawDuration === 'number' && rawDuration > 0) {
+      return `${rawDuration} min`;
+    }
+
+    if (typeof rawDuration === 'string' && rawDuration.trim()) {
+      const trimmed = rawDuration.trim();
+      return /^\d+$/.test(trimmed) ? `${trimmed} min` : trimmed;
+    }
+
+    return 'No disponible';
   }
 
   function formatList(value, fallback = 'No disponible') {
@@ -100,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       posterUrl: resolvePosterUrl(
         movie.poster_path || movie.poster || movie.posterUrl
       ),
+      duration: formatDuration(movie),
       director: formatList(director, 'No disponible'),
       cast: formatList(cast, 'No disponible'),
       genres: formatList(genres, 'No disponible')
@@ -141,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearEl) yearEl.textContent = movie.year;
     if (overviewEl) overviewEl.textContent = movie.overview;
 
+    if (durationEl) durationEl.textContent = movie.duration;
     if (directorEl) directorEl.textContent = movie.director;
     if (castEl) castEl.textContent = movie.cast;
     if (genresEl) genresEl.textContent = movie.genres;
@@ -148,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (statusEl) statusEl.hidden = true;
     if (layoutEl) layoutEl.hidden = false;
   }
-  
+
   if (!movieId) {
     setError('No se especificó ninguna película en la URL (ejemplo: pelicula.html?id=550).');
     return;

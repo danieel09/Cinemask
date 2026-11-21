@@ -440,9 +440,8 @@ button {
     padding: 26px 24px;
   }
 
-  .aside-actions {
     justify-content: flex-start;
-  }
+
 }
 
 @media (min-width: 1200px) {
