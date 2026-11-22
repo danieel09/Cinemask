@@ -286,18 +286,6 @@ button {
   background: rgba(17, 24, 32, 0.12);
 }
 
-.icon-button[aria-pressed="true"] .plus-mark {
-  opacity: 0;
-}
-
-.icon-button[aria-pressed="true"] .plus-circle {
-  fill: var(--accent-action);
-}
-
-.icon-button[aria-pressed="true"] .plus-mark {
-  stroke: var(--panel-bg);
-}
-
 .icon-button svg {
   display: block;
   width: 100%;
@@ -439,9 +427,6 @@ button {
     flex: 0.9 1 0;
     padding: 26px 24px;
   }
-
-    justify-content: flex-start;
-
 }
 
 @media (min-width: 1200px) {
@@ -457,4 +442,14 @@ button {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+#watchlist-button.is-active .plus-circle {
+  fill: #e50914;
+  stroke: #e50914;
+}
+
+#watchlist-button.is-active .plus-mark {
+  opacity: 1;
+  stroke: #ffffff;
 }

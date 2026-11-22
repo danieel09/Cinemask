@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const statusEl = document.getElementById('page-status');
   const layoutEl = document.getElementById('movie-layout');
+  const btnWatchlist = document.getElementById('watchlist-button');
 
   const posterImg = document.getElementById('movie-poster');
   const titleEl = document.getElementById('movie-title');
@@ -18,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TMDB_IMG_W500 = 'https://image.tmdb.org/t/p/w500';
   const FALLBACK_POSTER = 'images/logoCinemask.png';
+
+  let currentMedia = null;
+  let watchlistDocId = null;
+  let procesandoWatchlist = false;
 
   function setError(message) {
     if (!statusEl || !layoutEl) return;
@@ -170,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderMedia(media) {
+    currentMedia = media;
     document.title = `${media.title} | CINEMASK`;
 
     if (posterImg) {
@@ -194,12 +200,139 @@ document.addEventListener('DOMContentLoaded', () => {
     if (layoutEl) layoutEl.hidden = false;
   }
 
+  function obtenerSesion() {
+    let usuario = null;
+    try {
+      usuario = JSON.parse(localStorage.getItem('usuario'));
+    } catch (_) {
+      usuario = null;
+    }
+    const token = localStorage.getItem('token');
+    const userId = usuario?.id || usuario?._id;
+    const esInvitado = !usuario || usuario.role === 'guest' || !userId;
+
+    return { usuario, token, userId, esInvitado };
+  }
+
+  async function verificarEstadoWatchlist() {
+    const { token, userId, esInvitado } = obtenerSesion();
+    if (esInvitado) return;
+
+    try {
+      const res = await fetch(
+        `/api/watchlist/verificar/${encodeURIComponent(userId)}/${encodeURIComponent(mediaId)}?tipo=${encodeURIComponent(mediaType)}`,
+        {
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` })
+          }
+        }
+      );
+      const json = await res.json();
+
+      if (res.ok && json.enWatchlist && json.item) {
+        watchlistDocId = json.item._id;
+        actualizarIconoWatchlist(true);
+      } else {
+        watchlistDocId = null;
+        actualizarIconoWatchlist(false);
+      }
+    } catch (error) {
+      console.error('Error al verificar estado en watchlist:', error);
+    }
+  }
+
+  if (btnWatchlist) {
+    btnWatchlist.addEventListener('click', async () => {
+      const { token, userId, esInvitado } = obtenerSesion();
+
+      if (esInvitado) {
+        alert('Inicia sesión para guardar títulos en tu Watchlist.');
+        return;
+      }
+
+      if (!currentMedia || procesandoWatchlist) return;
+      procesandoWatchlist = true;
+
+      try {
+        if (watchlistDocId) {
+          const res = await fetch(`/api/watchlist/eliminar/${encodeURIComponent(watchlistDocId)}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token && { Authorization: `Bearer ${token}` })
+            }
+          });
+          const json = await res.json();
+
+          if (!res.ok || json.success === false) {
+            throw new Error(json.mensaje || 'Error al eliminar de watchlist');
+          }
+
+          watchlistDocId = null;
+          actualizarIconoWatchlist(false);
+        } else {
+          const res = await fetch('/api/watchlist/agregar', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token && { Authorization: `Bearer ${token}` })
+            },
+            body: JSON.stringify({
+              usuarioId: String(userId),
+              peliculaId: String(currentMedia.id),
+              tipo: mediaType,
+              titulo: currentMedia.title,
+              anio: currentMedia.year,
+              posterUrl: currentMedia.posterUrl
+            })
+          });
+          const json = await res.json();
+
+          if (!res.ok || json.success === false) {
+            throw new Error(json.mensaje || 'Error al agregar a watchlist');
+          }
+
+          watchlistDocId = json.item?._id || null;
+          actualizarIconoWatchlist(true);
+        }
+      } catch (error) {
+        console.error('Error en toggle watchlist:', error);
+        alert(error.message);
+      } finally {
+        procesandoWatchlist = false;
+      }
+    });
+  }
+
   if (!mediaId) {
     setError('No se especificó ningún título en la URL (ejemplo: pelicula.html?id=550&tipo=movie).');
     return;
   }
 
   fetchMediaData(mediaId, mediaType)
-    .then((raw) => renderMedia(normalizeMediaPayload(raw, mediaType)))
+    .then((raw) => {
+      renderMedia(normalizeMediaPayload(raw, mediaType));
+      verificarEstadoWatchlist();
+    })
     .catch((error) => setError(error.message));
 });
+
+function actualizarIconoWatchlist(enWatchlist) {
+  const btn = document.getElementById('watchlist-button');
+  if (!btn) return;
+  const mark = btn.querySelector('.plus-mark');
+  if (!mark) return;
+
+  btn.setAttribute('aria-pressed', String(enWatchlist));
+  btn.classList.toggle('is-active', enWatchlist);
+
+  if (enWatchlist) {
+    mark.setAttribute('d', 'M47.8 36.2l2.6 2.6 5.2-5.4');
+    btn.title = 'Quitar de watchlist';
+    btn.setAttribute('aria-label', 'Quitar de watchlist');
+  } else {
+    mark.setAttribute('d', 'M51.5 31.8v8.4m-4.2-4.2h8.4');
+    btn.title = 'Añadir a watchlist';
+    btn.setAttribute('aria-label', 'Añadir a watchlist');
+  }
+}
