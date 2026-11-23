@@ -18,12 +18,14 @@ const rutasSeries = require("./src/routes/SerieRoute");
 const rutasAuth = require("./src/routes/authRoute");
 const rutasUsuarios = require("./src/routes/usuarioRoute");
 const rutasWatchlist = require("./src/routes/watchlistRoute");
+const rutasResenas = require("./src/routes/resenaRoute");
 
 app.use("/api/usuarios", rutasUsuarios);
 app.use("/api/peliculas", rutasPelis);
 app.use("/api/series", rutasSeries);
 app.use('/api/auth', rutasAuth);
 app.use('/api/watchlist', rutasWatchlist);
+app.use("/api/resenas", rutasResenas);
 
 async function iniciarServidor() {
   await conectarDB();
