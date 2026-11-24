@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
       configurarCalendarioSinFuturo();
       updateRating(0);
 
-      window.location.href = 'home.html';
+      window.location.href = 'diario.html';
       
     } catch (error) {
       setStatus(error.message || 'Ocurrió un error al enviar la reseña.', 'error');

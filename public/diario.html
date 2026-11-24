@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Diario | Cinemask</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="diario.css" />
+      <link rel="stylesheet" href="navbar.css" />
+      <link rel="stylesheet" href="invitado.css" />
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+  <main class="diario-container">
+    <section class="diario-header">
+      <div>
+        <h1 class="diario-page-title">Mi Diario</h1>
+      </div>
+
+      <div class="diario-stats">
+        <div class="stat-box">
+          <span class="stat-valor" id="statTotal">0</span>
+          <span class="stat-label">Registros</span>
+        </div>
+      </div>
+    </section>
+
+    <div id="diarioLoader" class="diario-estado">
+      <div class="spinner"></div>
+      <p>Cargando tu diario...</p>
+    </div>
+
+    <section class="diario-lista" id="diarioLista" hidden></section>
+  </main>
+
+  <div id="diarioToast" class="diario-toast"></div>
+
+  <script src="js/diario.js"></script>
+  <script src="js/navbar.js"></script>
+    <script src="js/invitado.js"></script>
+</body>
+</html>

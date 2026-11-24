@@ -109,6 +109,42 @@ exports.obtenerResenaPorId = async (req, res) => {
   }
 };
 
+exports.obtenerDiarioUsuario = async (req, res) => {
+  try {
+    const usuarioId =
+      req.params.usuarioId ||
+      req.query.usuarioId ||
+      req.usuario?.id ||
+      req.usuario?._id;
+
+    if (!usuarioId) {
+      return res.status(400).json({
+        success: false,
+        mensaje: "El usuarioId es obligatorio."
+      });
+    }
+
+    const diario = await Resena.find({ usuarioId: String(usuarioId) }).sort({
+      fechaVista: -1,
+      horaVista: -1,
+      createdAt: -1
+    });
+
+    return res.status(200).json({
+      success: true,
+      total: diario.length,
+      data: diario
+    });
+  } catch (error) {
+    console.error("Error en obtenerDiarioUsuario:", error);
+    return res.status(500).json({
+      success: false,
+      mensaje: "Error al obtener el diario del usuario.",
+      error: error.message
+    });
+  }
+};
+
 // DATOS ACTUALIZABLES: calificacion, contieneSpoilers, comentario
 exports.actualizarResena = async (req, res) => {
   try {
