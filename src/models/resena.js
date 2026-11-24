@@ -12,8 +12,7 @@ const resenaSchema = new mongoose.Schema(
       required: true
     },
     peliculaId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Pelicula",
+      type: String,
       required: true
     },
     titulo: {

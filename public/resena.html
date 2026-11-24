@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Escribe una reseña de una película en CINEMASK." />
+  <title>Escribir reseña | CINEMASK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="resena.css" />
+  <link rel="stylesheet" href="navbar.css" />
+</head>
+<body>
+    <div id="navbar-container"></div>
+    
+  <main class="review-page">
+    <section class="review-layout" aria-label="Escribir reseña de película">
+      <figure class="movie-poster">
+        <img id="movie-poster" alt="" hidden />
+        <figcaption id="poster-placeholder">Cargando película…</figcaption>
+      </figure>
+
+      <form class="review-form" id="review-form">
+        <header class="movie-heading">
+          <h1 id="movie-title">Cargando película…</h1>
+          <p id="movie-year" class="movie-year"></p>
+          <img class="heading-rule" src="images/resena/linea-superior.svg" alt="" />
+        </header>
+
+        <div class="rating-row">
+          <span class="rating-label" id="rating-label">Calificación:</span>
+          <div class="rating-stars" role="group" aria-labelledby="rating-label">
+            <button type="button" class="rating-star" data-rating="1" aria-label="1 de 5 estrellas" aria-pressed="false"></button>
+            <button type="button" class="rating-star" data-rating="2" aria-label="2 de 5 estrellas" aria-pressed="false"></button>
+            <button type="button" class="rating-star" data-rating="3" aria-label="3 de 5 estrellas" aria-pressed="false"></button>
+            <button type="button" class="rating-star" data-rating="4" aria-label="4 de 5 estrellas" aria-pressed="false"></button>
+            <button type="button" class="rating-star" data-rating="5" aria-label="5 de 5 estrellas" aria-pressed="false"></button>
+          </div>
+          <input id="rating-value" name="calificacion" type="hidden" value="" />
+        </div>
+
+
+        <label class="visually-hidden" for="review-comment">Comentario de la reseña</label>
+        
+        <div class="comment-box">
+            <label class="comment-toggle" for="include-comment">
+            <input id="include-comment" name="incluirComentario" type="checkbox" checked aria-controls="review-comment" />
+            <span>Comentarios</span>
+            </label>
+          <img class="comment-rule" src="images/resena/linea-comentario.svg" alt="" />
+          <textarea id="review-comment" name="comentario" maxlength="2000" placeholder="Escribe tu reseña…"></textarea>
+        </div>
+
+        <div class="review-footer">
+          <div class="review-options">
+            <label class="viewed-field" for="viewed-date">
+              <span>Visto el:</span>
+              <input id="viewed-date" name="fechaVista" type="date" required />
+            </label>
+
+            <fieldset class="spoiler-field">
+              <legend>¿Contiene Spoilers?</legend>
+              <label><input type="radio" name="contieneSpoilers" value="false" checked /> <span>No</span></label>
+              <label><input type="radio" name="contieneSpoilers" value="true" /> <span>Sí</span></label>
+            </fieldset>
+          </div>
+
+          <button class="submit-button" id="submit-review" type="submit" disabled>Enviar</button>
+        </div>
+
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <script src="js/resena.js" defer></script>
+  <script src="js/navbar.js"></script>
+</body>
+</html>

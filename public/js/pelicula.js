@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const statusEl = document.getElementById('page-status');
   const layoutEl = document.getElementById('movie-layout');
   const btnWatchlist = document.getElementById('watchlist-button');
+  const btnReview = document.getElementById('review-button');
 
   const posterImg = document.getElementById('movie-poster');
   const titleEl = document.getElementById('movie-title');
@@ -301,6 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } finally {
         procesandoWatchlist = false;
       }
+    });
+  }
+
+  if (btnReview) {
+    btnReview.addEventListener('click', () => {
+      const query = new URLSearchParams({ id: mediaId || '', tipo: mediaType });
+      window.location.href = `resena.html?${query.toString()}`;
     });
   }
 
